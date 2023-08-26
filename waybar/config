@@ -1,0 +1,127 @@
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "height": 30,
+    "fixed-center": false,
+    "modules-left": ["wlr/workspaces","hyprland/window"],
+    "modules-right": ["network","custom/power_profile","backlight","pulseaudio#microphone","pulseaudio","battery","clock"],
+
+    "hyprland/window": {
+        "format": "{}"
+    },
+
+     "temperature": {
+        "format": "{temperatureC}°C ",
+        "tooltip": false
+    },
+
+    "custom/weather" : {
+        //shows the current weather and forecast
+        "tooltip" : true,
+        "format" : "{}",
+        "interval" : 30,
+        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
+        "return-type" : "json"
+    },
+
+    "wlr/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "on-click": "activate",
+        "persistent_workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": [],
+            "10": []
+        }
+    },
+    
+    "custom/power_profile":{
+        //shows the current power profile and switches to next on click
+        "exec": "asusctl profile -p | sed s:'Active profile is'::",
+        "interval": 30,
+        "format": "󰈐{}", 
+        "on-click": "asusctl profile -n; pkill -SIGRTMIN+8 waybar",
+        "signal": 8
+    },
+
+   "custom/weather" : {
+        //shows the current weather and forecast
+        "tooltip" : true,
+        "format" : "{}",
+        "interval" : 30,
+        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
+        "return-type" : "json"
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10
+    },
+
+    "clock": {
+        "format": "{: %I:%M %p}",
+        "tooltip-format": "{:%a, %b %e}"
+    },
+
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "min-length": 6,
+        "tooltip": false
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "tooltip": false,
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{icon} {time}",
+        //"format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+        "format-icons": [" "," "," "," "," "]
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "tooltip": false,
+        "format-muted": "󰝟 {volume}%",
+        "on-click": "pamixer -t",
+        "format-icons": {
+            "default": ["", "", ""]
+        }
+    },
+
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "tooltip": false,
+        "format-source": "",
+        "format-source-muted": "",
+        "on-click": "pamixer --default-source -t",
+    },
+    
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": "  {essid}",
+        "format-ethernet": "{ipaddr}/{cidr}",
+        "tooltip-format": "{signalStrength}% | {ifname} | {gwaddr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "⚠ Disconnected",
+        "on-click": "kitty nmtui"
+    }
+}

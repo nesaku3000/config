@@ -1,0 +1,10 @@
+show=drun
+width=750
+height=400
+always_parse_args=true
+show_all=false
+print_command=true
+insensitive=true
+icons=true
+prompt=Whatchya got...
+columns=3
